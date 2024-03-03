@@ -23,7 +23,7 @@ public class ApprovePaymentHandler implements PaymentHandler {
                 status,
                 result.getTimestamp(),
                 result.getApprovalNumber(),
-                command.getMerchant().getMerchantId(),
+                command.getMerchant(),
                 command.getMethod(),
                 command.getCurrency(),
                 command.getAmount(),

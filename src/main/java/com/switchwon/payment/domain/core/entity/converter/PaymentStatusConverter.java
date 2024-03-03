@@ -4,7 +4,7 @@ import com.switchwon.payment.domain.core.entity.PaymentStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
-@Converter(autoApply = true)
+@Converter
 public class PaymentStatusConverter implements AttributeConverter<PaymentStatus, String> {
     @Override
     public String convertToDatabaseColumn(PaymentStatus attribute) {

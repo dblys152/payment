@@ -3,16 +3,21 @@ package com.switchwon.payment.domain.wallet;
 import com.switchwon.payment.domain.Currency;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.Value;
+import lombok.*;
 
 import java.util.EnumSet;
 import java.util.List;
 
-@Value(staticConstructor = "of")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Balances {
     @Valid
     @NotNull
-    List<Balance> items;
+    private List<Balance> items;
+
+    public static Balances of(List<Balance> items) {
+        return new Balances(items);
+    }
 
     public Balances(List<Balance> items) {
         this.items = items;

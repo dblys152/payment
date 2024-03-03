@@ -18,7 +18,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Merchant {
     @EmbeddedId
     @NotNull
-    @Column(name = "MERCHANT_ID", nullable = false)
     private MerchantId merchantId;
 
     @NotNull

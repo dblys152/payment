@@ -2,18 +2,24 @@ package com.switchwon.payment.domain.core.entity;
 
 import com.switchwon.payment.domain.Currency;
 import jakarta.validation.constraints.NotNull;
-import lombok.Value;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Value(staticConstructor = "of")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Fee {
     @NotNull
-    FeeType type;
+    private FeeType type;
 
     @NotNull
-    BigDecimal fee;
+    private BigDecimal fee;
 
     @NotNull
-    Currency currency;
+    private Currency currency;
+
+    public static Fee of(FeeType type, BigDecimal fee, Currency currency) {
+        return new Fee(type, fee, currency);
+    }
 }

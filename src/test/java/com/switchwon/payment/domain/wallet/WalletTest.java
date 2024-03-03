@@ -14,7 +14,7 @@ class WalletTest extends SupportWalletFixture {
 
     @BeforeEach
     void setUp() {
-        wallet = Wallet.of(USER_ID, BALANCES, NOW, NOW);
+        wallet = Wallet.of(USER_ID, BALANCES, TIMESTAMP, TIMESTAMP);
     }
 
     @Test
@@ -27,7 +27,7 @@ class WalletTest extends SupportWalletFixture {
 
     @Test
     void 잔액을_사용한다() {
-        Balance usedBalance = Balance.of(Currency.USD, BigDecimal.valueOf(155), NOW);
+        Balance usedBalance = Balance.of(Currency.USD, BigDecimal.valueOf(155), TIMESTAMP);
         Balance originBalance = wallet.getBalances().getByCurrency(Currency.USD);
 
         wallet.useBalance(usedBalance);

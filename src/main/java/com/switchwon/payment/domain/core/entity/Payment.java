@@ -6,7 +6,7 @@ import com.switchwon.payment.domain.core.entity.converter.DetailsConverter;
 import com.switchwon.payment.domain.core.entity.converter.FeesConverter;
 import com.switchwon.payment.domain.core.entity.converter.PaymentMethodConverter;
 import com.switchwon.payment.domain.core.entity.converter.PaymentStatusConverter;
-import com.switchwon.payment.domain.merchant.MerchantId;
+import com.switchwon.payment.domain.merchant.Merchant;
 import com.switchwon.payment.refs.user.domain.UserId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -28,11 +28,11 @@ import java.time.LocalDateTime;
 public class Payment extends AbstractAggregateRoot<Payment> {
     @EmbeddedId
     @NotNull
-    @Column(name = "PAYMENT_ID", nullable = false)
+    @Column(name = "PAYMENT_ID")
     private PaymentId paymentId;
 
+    @Embedded
     @NotNull
-    @Column(name = "USER_ID", nullable = false)
     private UserId userId;
 
     @NotNull
@@ -49,8 +49,9 @@ public class Payment extends AbstractAggregateRoot<Payment> {
     private String approvalNumber;
 
     @NotNull
-    @Column(name = "MERCHANT_ID", nullable = false)
-    private MerchantId merchantId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MERCHANT_ID")
+    private Merchant merchant;
 
     @NotNull
     @Column(name = "METHOD", nullable = false)
@@ -67,7 +68,7 @@ public class Payment extends AbstractAggregateRoot<Payment> {
     private BigDecimal amount;
 
     @NotNull
-    @Column(name = "Fees", nullable = false)
+    @Column(name = "FEES", nullable = false)
     @Convert(converter = FeesConverter.class)
     private Fees fees;
 
@@ -86,7 +87,7 @@ public class Payment extends AbstractAggregateRoot<Payment> {
             PaymentStatus status,
             LocalDateTime paymentTimestamp,
             String approvalNumber,
-            MerchantId merchantId,
+            Merchant merchant,
             PaymentMethod method,
             Currency currency,
             BigDecimal amount,
@@ -95,7 +96,7 @@ public class Payment extends AbstractAggregateRoot<Payment> {
             LocalDateTime registeredTimestamp
     ) {
         return new Payment(
-                paymentId, userId, status, paymentTimestamp, approvalNumber, merchantId, method, currency, amount, fees, details, registeredTimestamp);
+                paymentId, userId, status, paymentTimestamp, approvalNumber, merchant, method, currency, amount, fees, details, registeredTimestamp);
     }
 
     public static Payment create(
@@ -103,7 +104,7 @@ public class Payment extends AbstractAggregateRoot<Payment> {
             PaymentStatus status,
             LocalDateTime paymentTimestamp,
             String approvalNumber,
-            MerchantId merchantId,
+            Merchant merchant,
             PaymentMethod method,
             Currency currency,
             BigDecimal amount,
@@ -117,7 +118,7 @@ public class Payment extends AbstractAggregateRoot<Payment> {
                 status,
                 paymentTimestamp,
                 approvalNumber,
-                merchantId,
+                merchant,
                 method,
                 currency,
                 amount,

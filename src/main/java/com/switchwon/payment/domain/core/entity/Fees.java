@@ -2,13 +2,19 @@ package com.switchwon.payment.domain.core.entity;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.Value;
+import lombok.*;
 
 import java.util.List;
 
-@Value(staticConstructor = "of")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Fees {
     @Valid
     @NotNull
-    List<Fee> items;
+    private List<Fee> items;
+
+    public static Fees of(List<Fee> items) {
+        return new Fees(items);
+    }
 }

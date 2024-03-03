@@ -1,8 +1,12 @@
 package com.switchwon.payment.fixture;
 
+import com.switchwon.payment.domain.Currency;
 import com.switchwon.payment.domain.core.entity.Fees;
 import com.switchwon.payment.domain.core.entity.PaymentDetails;
 import com.switchwon.payment.domain.core.entity.PaymentId;
+import com.switchwon.payment.domain.merchant.FixedAmountFee;
+import com.switchwon.payment.domain.merchant.FixedAmountFees;
+import com.switchwon.payment.domain.merchant.Merchant;
 import com.switchwon.payment.domain.merchant.MerchantId;
 import com.switchwon.payment.refs.user.domain.UserId;
 
@@ -16,6 +20,9 @@ public class SupportPaymentFixture {
     protected static final UserId USER_ID = UserId.of("8888888");
     protected static final String APPROVAL_NUMBER = "2024010100004";
     protected static final MerchantId MERCHANT_ID = MerchantId.of("7777777");
+    protected static final FixedAmountFee USD_FIXED_AMOUNT_FEE = FixedAmountFee.of(BigDecimal.valueOf(5), Currency.USD);
+    protected static final FixedAmountFees FIXED_AMOUNT_FEES = FixedAmountFees.of(List.of(USD_FIXED_AMOUNT_FEE));
+    protected static final Merchant MERCHANT = Merchant.of(MERCHANT_ID, FIXED_AMOUNT_FEES);
     protected static final BigDecimal USD_200_DOLLARS = BigDecimal.valueOf(200);
     protected static final Fees FEES = Fees.of(List.of());
     protected static final String CARD_NUMBER = "5426-1324-2324-4365";
