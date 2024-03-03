@@ -2,9 +2,9 @@ package com.switchwon.payment.presentation;
 
 import com.switchwon.payment.common.exception.BadRequestException;
 import com.switchwon.payment.common.model.ApiResponseModel;
-import jakarta.servlet.ServletException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.NestedRuntimeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -25,9 +25,9 @@ public class GlobalExceptionHandler {
                 ApiResponseModel.error(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
     }
 
-    @ExceptionHandler(ServletException.class)
-    public ResponseEntity<ApiResponseModel<?>> handleServletException(ServletException ex) {
-        log.error("ServletException", ex);
+    @ExceptionHandler(NestedRuntimeException.class)
+    public ResponseEntity<ApiResponseModel<?>> handleNestedRuntimeException(NestedRuntimeException ex) {
+        log.error("NestedRuntimeException", ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 ApiResponseModel.error(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
     }
