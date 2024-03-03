@@ -1,5 +1,6 @@
 package com.switchwon.payment.infrastructure;
 
+import com.switchwon.payment.common.exception.ExceptionMessages;
 import com.switchwon.payment.domain.wallet.LoadWalletPort;
 import com.switchwon.payment.domain.wallet.RecordWalletPort;
 import com.switchwon.payment.domain.wallet.Wallet;
@@ -24,6 +25,6 @@ public class WalletPersistenceAdapter implements RecordWalletPort, LoadWalletPor
     @Override
     public Wallet findById(UserId userId) {
         return repository.findById(userId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new NoSuchElementException(ExceptionMessages.NO_DATA_MESSAGE));
     }
 }

@@ -1,11 +1,10 @@
 package com.switchwon.payment.domain.core.command.handler;
 
-import com.switchwon.payment.domain.core.entity.RecordPaymentPort;
 import com.switchwon.payment.domain.core.command.ApprovePaymentCommand;
 import com.switchwon.payment.domain.core.command.processor.PgApproveResult;
 import com.switchwon.payment.domain.core.entity.Payment;
+import com.switchwon.payment.domain.core.entity.RecordPaymentPort;
 import com.switchwon.payment.domain.merchant.Merchant;
-import com.switchwon.payment.domain.merchant.MerchantId;
 import com.switchwon.payment.refs.user.domain.User;
 import com.switchwon.payment.refs.user.domain.UserId;
 import org.junit.jupiter.api.Test;
@@ -49,9 +48,7 @@ class ApprovePaymentHandlerTest {
         User user = mock(User.class);
         given(command.getUser()).willReturn(user);
         given(user.getUserId()).willReturn(mock(UserId.class));
-        Merchant merchant = mock(Merchant.class);
-        given(merchant.getMerchantId()).willReturn(mock(MerchantId.class));
-        given(command.getMerchant()).willReturn(merchant);
+        given(command.getMerchant()).willReturn(mock(Merchant.class));
         return command;
     }
 }

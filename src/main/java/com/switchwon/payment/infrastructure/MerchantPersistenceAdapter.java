@@ -1,5 +1,6 @@
 package com.switchwon.payment.infrastructure;
 
+import com.switchwon.payment.common.exception.ExceptionMessages;
 import com.switchwon.payment.domain.merchant.LoadMerchantPort;
 import com.switchwon.payment.domain.merchant.Merchant;
 import com.switchwon.payment.domain.merchant.MerchantId;
@@ -17,6 +18,6 @@ public class MerchantPersistenceAdapter implements LoadMerchantPort {
     @Override
     public Merchant findById(MerchantId merchantId) {
         return repository.findById(merchantId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new NoSuchElementException(ExceptionMessages.NO_DATA_MESSAGE));
     }
 }
