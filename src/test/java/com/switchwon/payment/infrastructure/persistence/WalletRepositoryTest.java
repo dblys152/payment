@@ -27,7 +27,7 @@ class WalletRepositoryTest extends SupportWalletFixture {
 
     @BeforeEach
     void setUp() {
-        wallet = Wallet.of(USER_ID, BALANCES, TIMESTAMP, TIMESTAMP);
+        wallet = Wallet.of(WALLET_ID, USER_ID, BALANCES, TIMESTAMP, TIMESTAMP);
     }
 
     @Test
@@ -41,7 +41,16 @@ class WalletRepositoryTest extends SupportWalletFixture {
     void findById() {
         Wallet saved = repository.save(wallet);
 
-        Optional<Wallet> actual = repository.findById(saved.getUserId());
+        Optional<Wallet> actual = repository.findById(saved.getWalletId());
+
+        assertThat(actual).isPresent();
+    }
+
+    @Test
+    void findByUserId() {
+        Wallet saved = repository.save(wallet);
+
+        Optional<Wallet> actual = repository.findByUserId(saved.getUserId());
 
         assertThat(actual).isPresent();
     }

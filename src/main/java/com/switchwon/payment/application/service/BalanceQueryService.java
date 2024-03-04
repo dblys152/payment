@@ -18,7 +18,7 @@ public class BalanceQueryService implements GetBalanceQuery {
 
     @Override
     public Balance getBalance(UserId userId, Currency currency) {
-        Wallet wallet = loadWalletPort.findById(userId);
+        Wallet wallet = loadWalletPort.findByUserId(userId);
 
         return wallet.getBalanceByCurrency(currency);
     }

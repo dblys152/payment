@@ -6,7 +6,6 @@ import com.switchwon.payment.refs.user.domain.UserId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -19,10 +18,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
-public class Wallet extends AbstractAggregateRoot<Wallet> {
+public class Wallet {
     @EmbeddedId
     @NotNull
-    @Column(name = "USER_ID", nullable = false)
+    private WalletId walletId;
+
+    @Embedded
+    @Column(name = "USER_ID", nullable = false, unique = true)
+    @NotNull
     private UserId userId;
 
     @NotNull
@@ -38,8 +41,8 @@ public class Wallet extends AbstractAggregateRoot<Wallet> {
     @Column(name = "LAST_TIMESTAMP", nullable = false)
     private LocalDateTime lastTimestamp;
 
-    public static Wallet of(UserId userId, Balances balances, LocalDateTime registeredTimestamp, LocalDateTime lastTimestamp) {
-        return new Wallet(userId, balances, registeredTimestamp, lastTimestamp);
+    public static Wallet of(WalletId walletId, UserId userId, Balances balances, LocalDateTime registeredTimestamp, LocalDateTime lastTimestamp) {
+        return new Wallet(walletId, userId, balances, registeredTimestamp, lastTimestamp);
     }
 
     public void useBalance(Balance balance) {

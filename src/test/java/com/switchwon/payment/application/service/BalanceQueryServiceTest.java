@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
@@ -31,12 +30,12 @@ class BalanceQueryServiceTest {
     @Test
     void 잔액을_조회한다() {
         Wallet wallet = mock(Wallet.class);
-        given(loadWalletPort.findById(USER_ID)).willReturn(wallet);
+        given(loadWalletPort.findByUserId(USER_ID)).willReturn(wallet);
 
         when(wallet.getBalanceByCurrency(Currency.USD)).thenReturn(mock(Balance.class));
         Balance actual = sut.getBalance(USER_ID, Currency.USD);
 
         assertThat(actual).isNotNull();
-        then(loadWalletPort).should().findById(USER_ID);
+        then(loadWalletPort).should().findByUserId(USER_ID);
     }
 }

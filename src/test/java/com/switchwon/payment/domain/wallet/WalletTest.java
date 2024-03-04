@@ -14,7 +14,7 @@ class WalletTest extends SupportWalletFixture {
 
     @BeforeEach
     void setUp() {
-        wallet = Wallet.of(USER_ID, BALANCES, TIMESTAMP, TIMESTAMP);
+        wallet = Wallet.of(WALLET_ID, USER_ID, BALANCES, TIMESTAMP, TIMESTAMP);
     }
 
     @Test

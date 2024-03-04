@@ -23,8 +23,8 @@ public class WalletPersistenceAdapter implements RecordWalletPort, LoadWalletPor
 
 
     @Override
-    public Wallet findById(UserId userId) {
-        return repository.findById(userId)
+    public Wallet findByUserId(UserId userId) {
+        return repository.findByUserId(userId)
                 .orElseThrow(() -> new NoSuchElementException(ExceptionMessages.NO_DATA_MESSAGE));
     }
 }
