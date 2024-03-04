@@ -19,5 +19,5 @@
   - -H ContentType: application/json
 
 [결제 승인 요청]
-- POST http://localhost:8080/api/payment/balance/{userId}
+- POST http://localhost:8080/api/payments/approval
   - -H ContentType: application/json
