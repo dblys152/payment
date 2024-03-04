@@ -5,8 +5,8 @@ import com.switchwon.payment.domain.core.entity.PaymentMethod;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -34,8 +34,9 @@ public class ApprovePaymentRequest {
     @NotNull
     private PaymentDetailsRequest paymentDetails;
 
+    @Data
+    @AllArgsConstructor
     @NoArgsConstructor
-    @Getter
     public static class PaymentDetailsRequest {
         @NotNull
         @Size(min = 19, max = 19)

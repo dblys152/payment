@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -37,5 +37,13 @@ class PaymentProcessorFinderTest {
 
         assertThat(actual).isNotNull();
         assertThat(actual).isInstanceOf(CreditCardPaymentProcessor.class);
+    }
+
+    @Test
+    void 결제_수단에_대한_프로세서가_없으면_에러를_반환한다() {
+        ApprovePaymentCommand command = mock(ApprovePaymentCommand.class);
+        given(command.getMethod()).willReturn(PaymentMethod.POINT);
+
+        assertThatThrownBy(() -> paymentProcessorFinder.getProcessor(command)).isInstanceOf(IllegalStateException.class);
     }
 }

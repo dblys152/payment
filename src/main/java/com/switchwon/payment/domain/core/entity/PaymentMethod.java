@@ -7,7 +7,8 @@ import java.util.Arrays;
 
 @Getter
 public enum PaymentMethod {
-    CREDIT_CARD("creditCard");
+    CREDIT_CARD("creditCard"),
+    POINT("point");
 
     final String value;
 
@@ -16,11 +17,15 @@ public enum PaymentMethod {
     }
 
     @JsonCreator
-    public static PaymentMethod fromValue(String value) {
-        return Arrays.stream(PaymentMethod.values())
-                .filter(p -> p.value.equalsIgnoreCase(value))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No such PaymentMethod with value: " + value));
+    public static PaymentMethod from(String value) {
+        try {
+            return PaymentMethod.valueOf(value);
+        } catch (IllegalArgumentException ex) {
+            return Arrays.stream(PaymentMethod.values())
+                    .filter(p -> p.value.equalsIgnoreCase(value))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("No such PaymentMethod with value: " + value));
+        }
     }
 
     public boolean isCreditCard() {

@@ -26,7 +26,7 @@ public class PaymentCommandService implements ApprovalPaymentUseCase {
 
         Payment payment = result.handle(paymentHandler, command);
 
-        // TODO: payment 이벤트 발행 -> balance 사용
+        // TODO: 만약 결제 수단이 계좌와 연결된 카드라면 잔액 사용 처리 (payment 이벤트 발행 -> balance 사용)
 
         return payment;
     }
