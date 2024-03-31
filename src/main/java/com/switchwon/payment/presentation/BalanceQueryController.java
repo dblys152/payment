@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping(value = "/api/payment/balance",
@@ -23,13 +22,12 @@ public class BalanceQueryController {
     private final GetBalanceQuery getBalanceQuery;
 
     @GetMapping("/{userId}")
-    public Mono<ResponseEntity<BalanceModel>> getBalance(
+    public ResponseEntity<BalanceModel> getBalance(
             @PathVariable("userId") String userId,
             GetBalanceRequest request) {
-        return Mono.fromCallable(() -> {
-                    Balance balance = getBalanceQuery.getBalance(UserId.of(userId), request.getCurrency());
-                    return new BalanceModel(userId, balance.getAmount(), balance.getCurrency().name());
-                })
-                .map(balanceModel ->  ResponseEntity.status(HttpStatus.OK).body(balanceModel));
+        Balance balance = getBalanceQuery.getBalance(UserId.of(userId), request.getCurrency());
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new BalanceModel(userId, balance.getAmount(), balance.getCurrency().name()));
     }
 }

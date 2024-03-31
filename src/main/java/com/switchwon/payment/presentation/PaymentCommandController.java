@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping(value = "/api/payments",
@@ -27,12 +26,12 @@ public class PaymentCommandController {
     private final ApprovalPaymentUseCase approvalPaymentUseCase;
 
     @PostMapping("/approval")
-    public Mono<ResponseEntity<PaymentModel>> approvePayment(@Valid @RequestBody ApprovePaymentRequest request) {
-        return Mono.fromCallable(() -> {
-                    ApprovePaymentCommand command = commandFactory.create(request);
-                    Payment payment = approvalPaymentUseCase.approve(command);
-                    return PaymentModel.fromDomain(payment);
-                })
-                .map(paymentModel -> ResponseEntity.status(HttpStatus.CREATED).body(paymentModel));
+    public ResponseEntity<PaymentModel> approvePayment(@Valid @RequestBody ApprovePaymentRequest request) {
+        ApprovePaymentCommand command = commandFactory.create(request);
+
+        Payment payment = approvalPaymentUseCase.approve(command);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                PaymentModel.fromDomain(payment));
     }
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping(value = "/api/payment/estimate",
@@ -27,13 +26,12 @@ public class PaymentEstimationController {
     private final EstimatePaymentUseCase estimatePaymentUseCase;
 
     @PostMapping("")
-    public Mono<ResponseEntity<PaymentEstimationModel>> estimatePayment(@Valid @RequestBody EstimatePaymentRequest request) {
-        return Mono.fromCallable(() -> {
-                    EstimatePaymentCommand command = commandFactory.create(request);
-                    PaymentEstimation paymentEstimation = estimatePaymentUseCase.estimate(command);
-                    return new PaymentEstimationModel(
-                            paymentEstimation.getEstimatedTotal(), paymentEstimation.getFees(), paymentEstimation.getCurrency().name());
-                })
-                .map(paymentEstimationModel -> ResponseEntity.status(HttpStatus.OK).body(paymentEstimationModel));
+    public ResponseEntity<PaymentEstimationModel> estimatePayment(@Valid @RequestBody EstimatePaymentRequest request) {
+        EstimatePaymentCommand command = commandFactory.create(request);
+
+        PaymentEstimation paymentEstimation = estimatePaymentUseCase.estimate(command);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new PaymentEstimationModel(
+                paymentEstimation.getEstimatedTotal(), paymentEstimation.getFees(), paymentEstimation.getCurrency().name()));
     }
 }

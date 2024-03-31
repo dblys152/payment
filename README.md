@@ -1,4 +1,4 @@
-# payment-switchwon
+# payment
 
 ### 개발환경
 - Spring Boot 3.2.3
